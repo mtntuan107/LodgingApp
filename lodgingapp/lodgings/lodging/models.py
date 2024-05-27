@@ -45,14 +45,14 @@ class Lodging(BaseModel):
 
 class ImageLodging(BaseModel):
     image = models.ImageField(upload_to='uploads/%Y/%m')
-    lodging = models.ForeignKey(Lodging, on_delete=models.CASCADE)
+    lodging = models.ForeignKey(Lodging, on_delete=models.CASCADE, related_name='image_lodging')
 
 
 class SPrice(BaseModel):
     name = models.CharField(max_length=100, null=False, unique=True)
     value = models.IntegerField()
 
-    lodging = models.ForeignKey(Lodging, on_delete=models.CASCADE)
+    lodging = models.ForeignKey(Lodging, on_delete=models.CASCADE, related_name='service_price')
 
 
 class Post(BaseModel):

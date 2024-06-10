@@ -1,5 +1,3 @@
-import datetime
-from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from ckeditor.fields import RichTextField
@@ -7,7 +5,7 @@ from cloudinary.models import CloudinaryField
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='uploads/%Y/%m')
+    avatar = CloudinaryField(null=True)
     dob = models.DateField(auto_now=False, auto_now_add=False, default=None)
     phone_number = models.CharField(max_length=10, null=False, default="113")
     role = models.CharField(max_length=10, null=False, default="user")
@@ -27,7 +25,7 @@ class BaseModel(models.Model):
 
 
 class ImageOwner(BaseModel):
-    image = models.ImageField(upload_to='uploads/%Y/%m')
+    image = CloudinaryField(null=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
 
 
@@ -44,7 +42,7 @@ class Lodging(BaseModel):
 
 
 class ImageLodging(BaseModel):
-    image = models.ImageField(upload_to='uploads/%Y/%m')
+    image = CloudinaryField(null=True)
     lodging = models.ForeignKey(Lodging, on_delete=models.CASCADE, related_name='image_lodging')
 
 

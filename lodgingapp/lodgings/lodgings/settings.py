@@ -41,12 +41,18 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
+    'oauth2_provider',
+    'drf_yasg',
 
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': '3'
+    'PAGE_SIZE': '3',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+
+    )
 }
 
 MIDDLEWARE = [
@@ -93,6 +99,15 @@ DATABASES = {
     }
 }
 
+import cloudinary
+
+cloudinary.config(
+    cloud_name="dryypwknd",
+    api_key="994269513234475",
+    api_secret="fzwHQueYdboNvPjcLLe8-MnEfqU"
+)
+
+
 AUTH_USER_MODEL = 'lodging.User'
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -135,3 +150,7 @@ CKEDITOR_UPLOAD_PATH = "posts"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLIENT_ID = 'T0OIHWplVQJPVtrjQr5qLfMV8dqvdithaK5AjLI2'
+
+CLIENT_SECRET = 'pbkdf2_sha256$720000$ot4p6JqIdHl4TDQmT8HWAk$N74WzBQs47L4kz/gCg0hDSXUPVlvHnLTftN+zLD7mHE='

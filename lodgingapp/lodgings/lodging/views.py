@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions, generics, status
 from .models import *
 from .serializers import *
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
+from .paginator import *
 
 
 def index(request):
@@ -45,6 +46,76 @@ class LodgingViewSet(viewsets.ModelViewSet):
     queryset = Lodging.objects.filter(active=True)
     serializer_class = LodgingSerializer
     # permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, ]
+    pagination_class = LodgingPaginator
+
+    # @action(detail=False, methods=['post'])
+    # def create2(self, request):
+    #     serializer = self.get_serializer(data=request.data)
+    #     if serializer.is_valid():
+    #         lodging = serializer.create2(serializer.validated_data)
+    #         return Response(LodgingSerializer(lodging).data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
+
+
+class OwnerCreateViewSet(viewsets.ModelViewSet,
+                      generics.ListAPIView,
+                      generics.CreateAPIView,
+                      generics.RetrieveAPIView):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
+
+    @action(detail=False, methods=['post'])
+    def create2(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            owner = serializer.create2(serializer.validated_data)
+            return Response(OwnerSerializer(owner).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ImageOwnerViewSet(viewsets.ModelViewSet, generics.CreateAPIView,
+                        generics.RetrieveAPIView, generics.ListAPIView):
+    queryset = ImageOwner.objects.all()
+    serializer_class = ImageOwnerSerializer
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
+
+
+class ImageLodgingViewSet(viewsets.ModelViewSet, generics.CreateAPIView,
+                        generics.RetrieveAPIView, generics.ListAPIView):
+    queryset = ImageLodging.objects.all()
+    serializer_class = ImageLodgingSerializer
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
+
+
+class SPriceViewSet(viewsets.ModelViewSet, generics.CreateAPIView,
+                        generics.RetrieveAPIView, generics.ListAPIView):
+    queryset = SPrice.objects.all()
+    serializer_class = SPriceSerializer
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
+
+
+class PostViewSet(viewsets.ModelViewSet, generics.CreateAPIView,
+                  generics.RetrieveAPIView, generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
     def get_permissions(self):
         if self.action == 'list':

@@ -14,6 +14,12 @@ class User(AbstractUser):
 class Owner(User):
     cmt = models.CharField(max_length=10, null=False, default="chu")
 
+    class Meta:
+        verbose_name = "Owner"
+
+    def __str__(self):
+        return self.username
+
 
 class BaseModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
@@ -26,7 +32,7 @@ class BaseModel(models.Model):
 
 class ImageOwner(BaseModel):
     image = CloudinaryField(null=True)
-    owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='image_owner')
 
 
 class Lodging(BaseModel):

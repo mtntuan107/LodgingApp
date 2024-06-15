@@ -13,6 +13,7 @@ class User(AbstractUser):
 
 class Owner(User):
     cmt = models.CharField(max_length=10, null=False, default="chu")
+    image = CloudinaryField(null=True)
 
     class Meta:
         verbose_name = "Owner"
@@ -38,9 +39,11 @@ class ImageOwner(BaseModel):
 class Lodging(BaseModel):
     title = models.CharField(max_length=255, default="New Lodging")
     locate = models.CharField(max_length=100, null=False)
+    price = models.IntegerField(default=1)
     e_price = models.IntegerField(default=1)
     w_price = models.IntegerField(default=1)
     description = RichTextField(default=None)
+    image = CloudinaryField(null=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
 
     def __str__(self):

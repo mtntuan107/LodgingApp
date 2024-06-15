@@ -42,15 +42,15 @@ class PostAdmin(admin.ModelAdmin):
     form = PostForm
 
 
-class OwnerAdmin(admin.ModelAdmin):
-    inlines = (ImageOwnerInline, )
-    list_display = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'avatar', 'dob', 'phone_number',
-                    'role', 'cmt']
-
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'avatar', 'dob', 'phone_number',
-                    'role']
+# class OwnerAdmin(admin.ModelAdmin):
+#     # inlines = (ImageOwnerInline, )
+#     list_display = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'avatar', 'dob', 'phone_number',
+#                     'role', 'image', 'cmt']
+#
+#
+# class UserAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'avatar', 'dob', 'phone_number',
+#                     'role']
 
 
 class LodgingAppAdminSite(admin.AdminSite):
@@ -68,9 +68,10 @@ class LodgingAppAdminSite(admin.AdminSite):
             'lodging_count' : lodging_count
         })
 
+
 admin_site = LodgingAppAdminSite('lodgingappadmin')
 
-admin_site.register(Owner, OwnerAdmin)
+# admin_site.register(Owner, OwnerAdmin)
 admin_site.register(Lodging, LodgingAdmin)
 admin_site.register(Post, PostAdmin)
-admin_site.register(User, UserAdmin)
+# admin_site.register(User, UserAdmin)

@@ -7,12 +7,12 @@ from cloudinary.models import CloudinaryField
 class User(AbstractUser):
     avatar = CloudinaryField(null=True)
     dob = models.DateField(auto_now=False, auto_now_add=False, default=None)
-    phone_number = models.CharField(max_length=10, null=False, default="113")
+    phone_number = models.CharField(max_length=10, null=False, default="None")
     role = models.CharField(max_length=10, null=False, default="user")
 
 
 class Owner(User):
-    cmt = models.CharField(max_length=10, null=False, default="chu")
+    id_num = models.CharField(max_length=10, null=False, default="None")
     image = CloudinaryField(null=True)
 
     class Meta:
@@ -40,8 +40,6 @@ class Lodging(BaseModel):
     title = models.CharField(max_length=255, default="New Lodging")
     locate = models.CharField(max_length=100, null=False)
     price = models.IntegerField(default=1)
-    e_price = models.IntegerField(default=1)
-    w_price = models.IntegerField(default=1)
     description = RichTextField(default=None)
     image = CloudinaryField(null=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)

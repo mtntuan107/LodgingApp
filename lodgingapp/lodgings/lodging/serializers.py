@@ -23,11 +23,10 @@ class UserSerializer(ModelSerializer):
         return user
 
 
-# class ImageOwnerSerializer(ModelSerializer):
-#     class Meta:
-#         model = ImageOwner
-#         fields = ['image', 'owner']
-#         extra_kwargs = {'owner': {'required': False}}
+class ImageOwnerSerializer(ModelSerializer):
+    class Meta:
+        model = ImageOwner
+        fields = ['id', 'image', 'owner']
 
 
 class OwnerSerializer(ModelSerializer):
@@ -36,7 +35,7 @@ class OwnerSerializer(ModelSerializer):
     class Meta:
         model = Owner
         fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'avatar', 'dob', 'phone_number',
-                  'role', 'cmt', 'image']
+                  'role', 'id_num', 'image']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -52,10 +51,10 @@ class OwnerSerializer(ModelSerializer):
         return owner
 
 
-# class ImageLodgingSerializer(ModelSerializer):
-#     class Meta:
-#         model = ImageLodging
-#         fields = ['id', 'image', 'lodging']
+class ImageLodgingSerializer(ModelSerializer):
+    class Meta:
+        model = ImageLodging
+        fields = ['id', 'image', 'lodging']
 
 
 # class SPriceSerializer(ModelSerializer):
@@ -67,7 +66,7 @@ class OwnerSerializer(ModelSerializer):
 class LodgingSerializer(ModelSerializer):
     class Meta:
         model = Lodging
-        fields = ['id', 'title', 'locate', 'price', 'e_price', 'w_price', 'description', 'image', 'owner']
+        fields = ['id', 'title', 'locate', 'price', 'description', 'image', 'owner']
 
 
 class PostSerializer(ModelSerializer):
@@ -95,16 +94,15 @@ class AuthenticatedOwnerDetailsSerializer(OwnerSerializer):
 
 
 class CommentSerializer(ModelSerializer):
-    owner = OwnerSerializer
 
     class Meta:
-        models = Comment
-        fields = ['id', 'content', 'created_at', 'owner']
+        model = Comment
+        fields = ['id', 'post', 'content', 'created_at', 'owner']
 
 
 class CommentULSerializer(ModelSerializer):
     user = UserSerializer
 
     class Meta:
-        models = CommentUL
-        fields = ['id', 'content', 'created_at', 'user']
+        model = CommentUL
+        fields = ['id', 'lodging', 'content', 'created_at', 'user']

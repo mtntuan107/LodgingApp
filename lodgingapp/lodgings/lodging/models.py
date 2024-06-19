@@ -6,7 +6,7 @@ from cloudinary.models import CloudinaryField
 
 class User(AbstractUser):
     avatar = CloudinaryField(null=True)
-    dob = models.DateField(auto_now=False, auto_now_add=False, default=None)
+    dob = models.DateField(auto_now=False, auto_now_add=False, default="2000-10-10")
     phone_number = models.CharField(max_length=10, null=False, default="None")
     role = models.CharField(max_length=10, null=False, default="user")
 
